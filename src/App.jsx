@@ -1,3 +1,4 @@
+import Header from './components/Header';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
@@ -68,6 +69,7 @@ const App = () => {
   return (
     <TelegramProvider>
       <div className="telegram-container">
+      <Header />
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<HomePage />} />

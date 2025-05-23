@@ -9,36 +9,39 @@ const Header = ({ title, showBackButton = false, rightAction = null }) => {
   
   const goBack = () => {
     if (location.pathname === '/') {
-      // Potentially do nothing or navigate to a specific page if on home and back is pressed
       return;
     }
     navigate(-1);
   };
-  
+
   return (
     <motion.header 
-      className="telegram-header"
+      className="telegram-header flex items-center justify-between px-4 py-2 bg-white shadow-md"
       initial={{ y: -50 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
-      <div className="flex items-center flex-1 min-w-0"> {/* min-w-0 is important for truncate to work */}
+      <div className="flex items-center flex-1 min-w-0">
         {showBackButton && (
           <button 
             onClick={goBack}
-            className="mr-3 text-white -ml-2 p-1" // Adjusted margin for better alignment
+            className="mr-3 text-black -ml-2 p-1"
             aria-label="Go back"
           >
             <ChevronLeft size={24} />
           </button>
         )}
-        {/* Title is now always on the left, and will truncate if too long */}
-        <h1 className="text-lg font-bold truncate">{title || 'Telegram Social'}</h1>
+        <h1 className="text-lg font-bold truncate sm:block hidden">
+          {title || 'Telegram Social'}
+        </h1>
       </div>
-      
-      {/* rightAction is for icons or buttons, not for the title */}
+
+      <div className="absolute left-1/2 transform -translate-x-1/2">
+        <img src="/youpp-logo.png" alt="Youpp Logo" className="h-10" />
+      </div>
+
       {rightAction && (
-        <div className="ml-auto flex-shrink-0 pl-2"> {/* Added pl-2 for spacing */}
+        <div className="ml-auto flex-shrink-0 pl-2">
           {rightAction}
         </div>
       )}
