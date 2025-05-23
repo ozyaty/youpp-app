@@ -16,7 +16,7 @@ const Header = ({ title, showBackButton = false, rightAction = null }) => {
 
   return (
     <motion.header 
-      className="telegram-header flex items-center justify-between px-4 py-2 bg-white shadow-md"
+    className="telegram-header flex items-center justify-between px-4 py-2 bg-[#0088cc] text-white shadow-md"
       initial={{ y: -50 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
