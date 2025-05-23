@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 96%; /* Light gray background */
+    --foreground: 222.2 84% 4.9%; /* Dark text */
+
+    --card: 0 0% 100%; /* White card background */
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 200 100% 45%; /* Vibrant Telegram Blue */
+    --primary-foreground: 0 0% 100%; /* White */
+
+    --secondary: 210 40% 96.1%; /* Light gray for secondary elements */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 100% 65%; /* Lighter blue for accents */
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 72.2% 50.6%; /* Red for destructive actions */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214.3 31.8% 91.4%; /* Light border */
+    --input: 214.3 31.8% 91.4%; /* Input field border */
+    --ring: 200 100% 45%; /* Ring focus color (Telegram Blue) */
+
+    --radius: 0.5rem;
+
+    /* Custom Telegram Theme Colors (Light) */
+    --telegram-bg-color: theme('colors.gray.100'); /* #f3f4f6 */
+    --telegram-text-color: theme('colors.gray.800'); /* #1f2937 */
+    --telegram-hint-color: theme('colors.gray.500'); /* #6b7280 */
+    --telegram-link-color: theme('colors.sky.600'); /* #0284c7 */
+    --telegram-button-bg-color: theme('colors.sky.500'); /* #0ea5e9 */
+    --telegram-button-text-color: theme('colors.white');
+    --telegram-secondary-bg-color: theme('colors.white'); /* #ffffff */
+    --telegram-divider-color: theme('colors.gray.200'); /* #e5e7eb */
+    --telegram-header-bg-color: theme('colors.sky.500');
+    --telegram-header-text-color: theme('colors.white');
+    --telegram-icon-color: theme('colors.gray.600');
+  }
+
+  .dark {
+    --background: 220 18% 12%; /* Very dark gray, almost black */
+    --foreground: 210 40% 98%; /* Light text for dark mode */
+
+    --card: 220 15% 18%; /* Darker card background */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 15% 18%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 200 80% 55%; /* Slightly brighter blue for dark mode */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 220 15% 22%; /* Dark gray for secondary elements */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 22%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 200 70% 65%; /* Lighter blue accent for dark mode */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 45.6%; /* Darker red for destructive actions */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 25%; /* Darker border */
+    --input: 220 15% 25%; /* Darker input field border */
+    --ring: 200 80% 55%; /* Ring focus color for dark mode */
+
+    /* Custom Telegram Theme Colors (Dark) */
+    --telegram-bg-color: theme('colors.slate.900'); /* #0f172a */
+    --telegram-text-color: theme('colors.slate.200'); /* #e2e8f0 */
+    --telegram-hint-color: theme('colors.slate.400'); /* #94a3b8 */
+    --telegram-link-color: theme('colors.sky.400'); /* #38bdf8 */
+    --telegram-button-bg-color: theme('colors.sky.500'); /* #0ea5e9 */
+    --telegram-button-text-color: theme('colors.white');
+    --telegram-secondary-bg-color: theme('colors.slate.800'); /* #1e293b */
+    --telegram-divider-color: theme('colors.slate.700'); /* #334155 */
+    --telegram-header-bg-color: theme('colors.sky.600'); /* #0284c7 - can be same or darker */
+    --telegram-header-text-color: theme('colors.white');
+    --telegram-icon-color: theme('colors.slate.300');
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-telegram-bg text-telegram-text;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Ensure CSS variables are correctly applied for components */
+@layer components {
+  .telegram-container {
+    @apply max-w-md mx-auto bg-telegram-secondary-bg min-h-screen shadow-xl;
+  }
+  
+  .telegram-header {
+    @apply bg-telegram-header-bg text-[var(--telegram-header-text-color)] py-3 px-4 flex items-center justify-between sticky top-0 z-20 shadow-md;
+  }
+  
+  .telegram-card {
+    @apply bg-telegram-secondary-bg rounded-lg shadow-sm border border-telegram-divider p-4 mb-0;
+  }
+  
+  .telegram-button {
+    @apply bg-[var(--telegram-button-bg-color)] hover:opacity-90 text-[var(--telegram-button-text-color)] font-medium py-2 px-4 rounded-md transition-colors duration-200;
+  }
+  .telegram-button-secondary {
+     @apply bg-telegram-secondary-bg text-telegram-text border border-telegram-divider hover:bg-telegram-bg;
+  }
+  
+  .telegram-input {
+    @apply w-full bg-telegram-bg border border-telegram-divider text-telegram-text rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-ring focus:border-ring;
+  }
+  
+  .telegram-tab {
+    @apply text-telegram-hint font-medium py-3 border-b-2 border-transparent hover:text-telegram-link hover:border-[var(--telegram-link-color)] hover:border-opacity-30;
+  }
+  
+  .telegram-tab-active {
+    @apply text-telegram-link border-telegram-link;
+  }
+
+  .avatar-fallback-themed {
+    @apply flex h-full w-full items-center justify-center rounded-full bg-primary/20 text-primary;
+  }
+
+  .post-action-button {
+    @apply text-telegram-hint hover:bg-primary/10 p-1.5 rounded-full;
+  }
+
+  .post-action-button .lucide {
+     @apply w-5 h-5;
+  }
+  
+  .post-action-button span {
+     @apply ml-1.5 text-xs;
+  }
+
+}
+
+.bookmark-icon-active {
+  @apply fill-telegram-link text-telegram-link;
+}
+.heart-icon-active {
+  @apply fill-red-500 text-red-500;
+}
+.repost-icon-active {
+  @apply text-green-500;
+}
+
+.cover-placeholder {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1), hsl(var(--accent) / 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-placeholder .lucide {
+  width: 48px;
+  height: 48px;
+  color: hsl(var(--primary) / 0.4);
+}
+
+.post-container + .post-container {
+  @apply border-t border-telegram-divider;
+}
