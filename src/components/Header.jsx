@@ -29,9 +29,11 @@ const Header = ({ title, showBackButton = false, rightAction = null }) => {
         </button>
       )}
 
-      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
-        <img src="/youpp-logo.png" alt="Youpp Logo" className="h-8 object-contain" />
-      </div>
+<div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+  <img src="/youpp-logo.png" alt="Youpp Logo" className="h-8 object-contain" />
+</div>
+
+
 
       {rightAction && (
         <div className="z-10">

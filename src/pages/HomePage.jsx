@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Header from '@/components/Header';
 import Post from '@/components/Post';
 import CreatePostButton from '@/components/CreatePostButton';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -11,24 +10,18 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    // Simulate initial loading or data fetching delay
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 300); 
-    
     return () => clearTimeout(timer);
   }, []);
 
   const followingPosts = feedPosts.filter(post => {
-    // Simple logic: Show posts not by the current user, or from users they might follow
-    // In a real app, this would use actual following data
     return post.author.id !== currentUser?.id; 
   });
   
   return (
     <div className="pb-16">
-      <Header title="Home" />
-      
       <Tabs defaultValue="foryou" className="w-full">
         <TabsList className="w-full flex bg-transparent border-b border-telegram-divider">
           <TabsTrigger 
@@ -99,8 +92,8 @@ const HomePage = () => {
               }}
             >
               {followingPosts.map((post) => (
-                  <Post key={post.id} post={post} />
-                ))}
+                <Post key={post.id} post={post} />
+              ))}
             </motion.div>
           )}
         </TabsContent>
