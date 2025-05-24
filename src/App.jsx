@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -20,30 +20,30 @@ import BookmarksPage from '@/pages/BookmarksPage';
 import ActivityPage from '@/pages/ActivityPage';
 import HelpSupportPage from '@/pages/HelpSupportPage';
 
-
 // Components
 import BottomNavigation from '@/components/BottomNavigation';
-import { TelegramProvider } from '@/contexts/TelegramContext';
+import { TelegramProvider, useTelegram } from '@/contexts/TelegramContext';
+import { Button } from '@/components/ui/button';
+import { Menu } from 'lucide-react';
 
-const App = () => {
+const AppContent = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { currentUser } = useTelegram();
+
   const [isReady, setIsReady] = useState(false);
-  // Default to light theme, localStorage can override if 'dark' was set previously
-  // but UI to change it is removed.
-  const [theme, setTheme] = useState(localStorage.getItem('appTheme') || 'light'); 
+  const [theme, setTheme] = useState(localStorage.getItem('appTheme') || 'light');
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
       window.Telegram.WebApp.expand();
     }
-    
-    // Force light theme if appearance page is removed
-    // Or allow previous theme if you want to keep dark mode accessible via localStorage
-    const currentTheme = 'light'; // Forcing light mode
+
+    const currentTheme = 'light';
     setTheme(currentTheme);
     localStorage.setItem('appTheme', currentTheme);
-    
+
     setTimeout(() => {
       setIsReady(true);
     }, 500);
@@ -52,7 +52,6 @@ const App = () => {
   useEffect(() => {
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
-    // localStorage.setItem('appTheme', theme); // Already set in initial useEffect
   }, [theme]);
 
   if (!isReady) {
@@ -65,36 +64,49 @@ const App = () => {
 
   const showBottomNav = !['/create', '/menu', '/account-details', '/privacy-security', '/bookmarks', '/activity', '/help-support'].includes(location.pathname) && !location.pathname.startsWith('/post/');
 
+  const isOwnProfile = location.pathname === `/profile/${currentUser?.id}`;
 
   return (
-    <TelegramProvider>
-      <div className="telegram-container">
-      <Header />
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/explore" element={<ExplorePage />} />
-            <Route path="/messages" element={<MessagesPage />} />
-            <Route path="/profile/:id?" element={<ProfilePage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
-            <Route path="/create" element={<CreatePostPage />} />
-            <Route path="/post/:id" element={<PostDetailPage />} />
-            <Route path="/menu" element={<MenuPage />} />
-            <Route path="/account-details" element={<AccountDetailsPage />} />
-            {/* <Route path="/appearance" element={<AppearancePage currentTheme={theme} setTheme={setTheme} />} /> */}
-            <Route path="/privacy-security" element={<PrivacySecurityPage />} />
-            <Route path="/bookmarks" element={<BookmarksPage />} />
-            <Route path="/activity" element={<ActivityPage />} />
-            <Route path="/help-support" element={<HelpSupportPage />} />
-          </Routes>
-        </AnimatePresence>
-        
-        {showBottomNav && <BottomNavigation />}
-        
-        <Toaster />
-      </div>
-    </TelegramProvider>
+    <div className="telegram-container">
+      <Header
+        rightAction={
+          isOwnProfile ? (
+            <Button variant="ghost" size="icon" className="text-white" onClick={() => navigate('/menu')}>
+              <Menu size={24} />
+            </Button>
+          ) : null
+        }
+      />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/explore" element={<ExplorePage />} />
+          <Route path="/messages" element={<MessagesPage />} />
+          <Route path="/profile/:id?" element={<ProfilePage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/create" element={<CreatePostPage />} />
+          <Route path="/post/:id" element={<PostDetailPage />} />
+          <Route path="/menu" element={<MenuPage />} />
+          <Route path="/account-details" element={<AccountDetailsPage />} />
+          {/* <Route path="/appearance" element={<AppearancePage currentTheme={theme} setTheme={setTheme} />} /> */}
+          <Route path="/privacy-security" element={<PrivacySecurityPage />} />
+          <Route path="/bookmarks" element={<BookmarksPage />} />
+          <Route path="/activity" element={<ActivityPage />} />
+          <Route path="/help-support" element={<HelpSupportPage />} />
+        </Routes>
+      </AnimatePresence>
+
+      {showBottomNav && <BottomNavigation />}
+
+      <Toaster />
+    </div>
   );
 };
+
+const App = () => (
+  <TelegramProvider>
+    <AppContent />
+  </TelegramProvider>
+);
 
 export default App;

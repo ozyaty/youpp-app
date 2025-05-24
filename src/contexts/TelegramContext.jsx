@@ -3,22 +3,24 @@ import { useNavigate } from 'react-router-dom';
 
 import { initializeDataHandler } from './telegramActions/dataInitialization';
 import { updateUserProfileHandler, toggleFollowUserHandler } from './telegramActions/userActions';
-import { addPostHandler, quotePostHandler, repostSimpleHandler, toggleLikeHandler, toggleBookmarkHandler, addCommentHandler } from './telegramActions/postActions';
+import {
+  addPostHandler, quotePostHandler, repostSimpleHandler,
+  toggleLikeHandler, toggleBookmarkHandler, addCommentHandler
+} from './telegramActions/postActions';
 import { markNotificationAsReadHandler } from './telegramActions/notificationActions';
 import { showAlertHandler, closeAppHandler } from './telegramActions/telegramWebAppActions';
 
-import { 
-  currentUser as mockCurrentUserInitial, 
+import {
+  currentUser as mockCurrentUserInitial,
   users as mockUsersInitial,
   posts as mockPostsInitial,
   comments as mockCommentsInitial,
   notifications as mockNotificationsInitial,
   trends as mockTrendsInitial,
   suggestedUsers as mockSuggestedUsersInitial
-} from '@/data/mockData'; 
+} from '@/data/mockData';
 
 const TelegramContext = createContext();
-
 export const useTelegram = () => useContext(TelegramContext);
 
 export const TelegramProvider = ({ children }) => {
@@ -30,16 +32,23 @@ export const TelegramProvider = ({ children }) => {
   const [trends, setTrends] = useState([]);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [headerConfig, setHeaderConfig] = useState({
+    showBackButton: false,
+    rightAction: null,
+  });
+
   const navigate = useNavigate();
 
   const commonSetters = {
-    setCurrentUser, setUsers, setPosts, setComments, setNotifications, setTrends, setSuggestedUsers, setIsInitialized
+    setCurrentUser, setUsers, setPosts, setComments,
+    setNotifications, setTrends, setSuggestedUsers, setIsInitialized
   };
 
   const commonData = {
-    mockCurrentUserInitial, mockUsersInitial, mockPostsInitial, mockCommentsInitial, mockNotificationsInitial, mockTrendsInitial, mockSuggestedUsersInitial
+    mockCurrentUserInitial, mockUsersInitial, mockPostsInitial,
+    mockCommentsInitial, mockNotificationsInitial, mockTrendsInitial, mockSuggestedUsersInitial
   };
-  
+
   const initializeData = useCallback(() => {
     initializeDataHandler(commonSetters, commonData);
   }, []);
@@ -101,6 +110,8 @@ export const TelegramProvider = ({ children }) => {
     trends,
     suggestedUsers,
     isInitialized,
+    headerConfig,
+    setHeaderConfig,
     actions: {
       updateUserProfile,
       addPost,

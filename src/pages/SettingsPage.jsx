@@ -84,8 +84,7 @@ const SettingsPage = () => {
   
   return (
     <div className="pb-16">
-      <Header title="Settings" showBackButton />
-      
+
       <div className="p-4">
         <div className="flex items-center space-x-4 mb-6">
           <div className="w-16 h-16 bg-telegram-blue rounded-full flex items-center justify-center text-white text-2xl font-bold">

@@ -1,17 +1,26 @@
-import React from 'react';
-import Header from '@/components/Header';
+import React, { useEffect } from 'react';
 import Post from '@/components/Post';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { motion } from 'framer-motion';
 import { BookmarkX } from 'lucide-react';
 
 const BookmarksPage = () => {
-  const { posts, currentUser } = useTelegram();
-  const bookmarkedPosts = posts.filter(post => currentUser?.bookmarkedPosts?.includes(post.id));
+  const { posts, currentUser, setHeaderConfig } = useTelegram();
+
+  useEffect(() => {
+    setHeaderConfig({ title: 'Bookmarks', showBackButton: true });
+
+    return () => {
+      setHeaderConfig({ title: null, showBackButton: false, rightAction: null });
+    };
+  }, [setHeaderConfig]);
+
+  const bookmarkedPosts = posts.filter(post =>
+    currentUser?.bookmarkedPosts?.includes(post.id)
+  );
 
   return (
     <div className="pb-16">
-      <Header title="Bookmarks" showBackButton />
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}

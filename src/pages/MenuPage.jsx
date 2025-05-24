@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, HelpCircle, LogOut, UserCircle, Bookmark, BarChart3 } from 'lucide-react'; // Removed Moon
+import { Shield, HelpCircle, LogOut, UserCircle, Bookmark, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Header from '@/components/Header';
-// import { Button } from '@/components/ui/button'; // Not used directly here anymore
 import { useToast } from '@/components/ui/use-toast';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,8 +9,17 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 const MenuPage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { currentUser, showAlert, closeApp } = useTelegram();
-  
+  const { currentUser, showAlert, closeApp, setHeaderConfig } = useTelegram();
+
+  useEffect(() => {
+    // Show back arrow and no right action
+    setHeaderConfig({ showBackButton: true, rightAction: null });
+
+    return () => {
+      setHeaderConfig({ showBackButton: false, rightAction: null });
+    };
+  }, [setHeaderConfig]);
+
   const handleLogout = () => {
     showAlert("Are you sure you want to log out?", (confirmed) => {
       if (confirmed) {
@@ -20,18 +27,18 @@ const MenuPage = () => {
           title: "Logged out",
           description: "You have been logged out successfully.",
         });
-        
+
         setTimeout(() => {
-          if (window.Telegram && window.Telegram.WebApp) {
+          if (window.Telegram?.WebApp) {
             closeApp();
           } else {
-            navigate('/'); 
+            navigate('/');
           }
         }, 1500);
       }
     });
   };
-  
+
   const menuItems = [
     {
       icon: UserCircle,
@@ -39,12 +46,6 @@ const MenuPage = () => {
       description: "Manage your account details",
       action: () => navigate('/account-details')
     },
-    // { // Appearance item removed
-    //   icon: Moon,
-    //   title: "Appearance",
-    //   description: "Toggle dark mode, theme settings",
-    //   action: () => navigate('/appearance')
-    // },
     {
       icon: Shield,
       title: "Privacy & Security",
@@ -77,12 +78,10 @@ const MenuPage = () => {
       danger: true
     }
   ];
-  
+
   return (
     <div className="pb-4">
-      <Header title="Menu" showBackButton />
-      
-      <motion.div 
+      <motion.div
         className="p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -90,10 +89,15 @@ const MenuPage = () => {
       >
         <div className="flex items-center space-x-3 mb-6 p-3 bg-telegram-secondary-bg rounded-lg">
           <Avatar className="h-12 w-12">
-            <AvatarImage src={currentUser?.avatar || `https://ui-avatars.com/api/?name=${currentUser?.name}&background=random`} alt={currentUser?.name} />
-            <AvatarFallback className="text-lg">{currentUser?.name?.charAt(0) || 'U'}</AvatarFallback>
+            <AvatarImage
+              src={currentUser?.avatar || `https://ui-avatars.com/api/?name=${currentUser?.name}&background=random`}
+              alt={currentUser?.name}
+            />
+            <AvatarFallback className="text-lg">
+              {currentUser?.name?.charAt(0) || 'U'}
+            </AvatarFallback>
           </Avatar>
-          
+
           <div>
             <h2 className="text-md font-semibold text-telegram-text">
               {currentUser?.name}
@@ -103,11 +107,11 @@ const MenuPage = () => {
             )}
           </div>
         </div>
-        
+
         <div className="bg-telegram-bg rounded-lg shadow-sm border border-telegram-divider overflow-hidden">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
-            
+
             return (
               <motion.button
                 key={item.title}
@@ -119,11 +123,11 @@ const MenuPage = () => {
                 transition={{ duration: 0.05 }}
               >
                 <div className={`w-9 h-9 rounded-lg flex items-center justify-center mr-3 ${
-                  item.danger ? 'bg-red-500/20' : 'bg-telegram-button-color/20' 
+                  item.danger ? 'bg-red-500/20' : 'bg-telegram-button-color/20'
                 }`}>
                   <Icon size={18} className={item.danger ? 'text-red-500' : 'text-telegram-button-color'} />
                 </div>
-                
+
                 <div className="flex-1">
                   <h3 className={`font-medium text-sm ${item.danger ? 'text-red-600' : 'text-telegram-text'}`}>{item.title}</h3>
                   {item.description && (
@@ -136,7 +140,7 @@ const MenuPage = () => {
             );
           })}
         </div>
-        
+
         <div className="mt-8 text-center text-xs text-telegram-hint">
           <p>Telegram Social App</p>
           <p>Version 1.0.1</p>

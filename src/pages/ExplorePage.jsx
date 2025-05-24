@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Header from '@/components/Header';
 import SearchBar from '@/components/SearchBar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -13,11 +12,9 @@ const ExplorePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   
   useEffect(() => {
-    // Simulate loading data
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 500);
-    
     return () => clearTimeout(timer);
   }, []);
   
@@ -41,7 +38,6 @@ const ExplorePage = () => {
   if (isLoading) {
     return (
       <div>
-        <Header title="Explore" />
         <SearchBar onSearch={handleSearch} />
         <div className="flex justify-center py-8">
           <div className="w-8 h-8 border-2 border-telegram-blue border-t-transparent rounded-full animate-spin"></div>
@@ -52,7 +48,6 @@ const ExplorePage = () => {
   
   return (
     <div className="pb-16">
-      <Header title="Explore" />
       <SearchBar onSearch={handleSearch} />
       
       {searchQuery ? (
@@ -140,7 +135,8 @@ const ExplorePage = () => {
                     <img  
                       className="w-full h-full object-cover" 
                       alt={`Popular photo by ${post.author.name}`}
-                     src="https://images.unsplash.com/photo-1595799640363-f4d34dc9e915" />
+                      src="https://images.unsplash.com/photo-1595799640363-f4d34dc9e915" 
+                    />
                   </motion.div>
                 ))}
             </div>

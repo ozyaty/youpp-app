@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Header from '@/components/Header';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Unlock, EyeOff, UserCheck, ShieldQuestion } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
@@ -8,11 +7,19 @@ import { useTelegram } from '@/contexts/TelegramContext';
 import { useToast } from '@/components/ui/use-toast';
 
 const PrivacySecurityPage = () => {
-  const { currentUser, updateUserProfile } = useTelegram();
+  const { currentUser, updateUserProfile, setHeaderConfig } = useTelegram();
   const { toast } = useToast();
 
   const [isPrivateProfile, setIsPrivateProfile] = useState(currentUser?.isPrivate || false);
   const [showActivityStatus, setShowActivityStatus] = useState(currentUser?.showActivityStatus !== undefined ? currentUser.showActivityStatus : true);
+
+  useEffect(() => {
+    setHeaderConfig({ title: 'Privacy & Security', showBackButton: true });
+
+    return () => {
+      setHeaderConfig({ title: null, showBackButton: false, rightAction: null });
+    };
+  }, [setHeaderConfig]);
 
   const handlePrivateProfileToggle = (checked) => {
     setIsPrivateProfile(checked);
@@ -31,7 +38,6 @@ const PrivacySecurityPage = () => {
       description: `Your activity status visibility has been updated.`,
     });
   };
-
 
   const privacyOptions = [
     {
@@ -53,20 +59,19 @@ const PrivacySecurityPage = () => {
       icon: UserCheck,
       title: 'Blocked Accounts',
       description: 'Manage accounts you have blocked.',
-      action: () => toast({ title: "Blocked Accounts", description: "Feature not yet implemented."}),
+      action: () => toast({ title: "Blocked Accounts", description: "Feature not yet implemented." }),
     },
-     {
+    {
       id: 'twoFactor',
       icon: ShieldQuestion,
       title: 'Two-Factor Authentication',
       description: 'Add an extra layer of security to your account.',
-      action: () => toast({ title: "Two-Factor Authentication", description: "Feature not yet implemented."}),
+      action: () => toast({ title: "Two-Factor Authentication", description: "Feature not yet implemented." }),
     }
   ];
 
   return (
-    <div>
-      <Header title="Privacy & Security" showBackButton />
+    <div className="pb-16">
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -79,7 +84,9 @@ const PrivacySecurityPage = () => {
             return (
               <div
                 key={item.id}
-                className={`flex items-center p-3.5 ${index !== privacyOptions.length - 1 ? 'border-b border-telegram-divider' : ''} ${item.action ? 'cursor-pointer hover:bg-telegram-secondary-bg/80' : ''}`}
+                className={`flex items-center p-3.5 ${
+                  index !== privacyOptions.length - 1 ? 'border-b border-telegram-divider' : ''
+                } ${item.action ? 'cursor-pointer hover:bg-telegram-secondary-bg/80' : ''}`}
                 onClick={item.action}
               >
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mr-3 bg-telegram-button-color/20">
@@ -94,8 +101,8 @@ const PrivacySecurityPage = () => {
             );
           })}
         </div>
-         <p className="mt-6 text-xs text-telegram-hint text-center">
-            Review your settings regularly to ensure your account remains secure and your privacy is protected.
+        <p className="mt-6 text-xs text-telegram-hint text-center">
+          Review your settings regularly to ensure your account remains secure and your privacy is protected.
         </p>
       </motion.div>
     </div>

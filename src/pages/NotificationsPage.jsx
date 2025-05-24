@@ -22,7 +22,7 @@ const NotificationsPage = () => {
   if (isLoading) {
     return (
       <div>
-        <Header title="Notifications" />
+        
         <div className="flex justify-center py-8">
           <div className="w-8 h-8 border-2 border-telegram-blue border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -32,7 +32,7 @@ const NotificationsPage = () => {
   
   return (
     <div className="pb-16">
-      <Header title="Notifications" />
+
       
       <Tabs defaultValue="all" className="w-full">
         <TabsList className="w-full flex bg-transparent border-b border-telegram-divider">

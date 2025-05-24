@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '@/components/Header';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { motion } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -10,19 +9,28 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 
 const AccountDetailsPage = () => {
-  const { currentUser, updateUserProfile } = useTelegram();
+  const { currentUser, updateUserProfile, setHeaderConfig } = useTelegram();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [formData, setFormData] = React.useState({
+
+  const [formData, setFormData] = useState({
     name: currentUser?.name || '',
     username: currentUser?.username || '',
-    email: currentUser?.email || 'test@example.com', 
-    phone: currentUser?.phone || '+1234567890', 
+    email: currentUser?.email || 'test@example.com',
+    phone: currentUser?.phone || '+1234567890',
     bio: currentUser?.bio || ''
   });
 
+  useEffect(() => {
+    setHeaderConfig({ title: 'Account Details', showBackButton: true });
+
+    return () => {
+      setHeaderConfig({ title: null, showBackButton: false, rightAction: null });
+    };
+  }, [setHeaderConfig]);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
@@ -35,17 +43,11 @@ const AccountDetailsPage = () => {
   };
 
   if (!currentUser) {
-    return (
-      <div>
-        <Header title="Account Details" showBackButton />
-        <div className="p-4 text-center">Loading user data...</div>
-      </div>
-    );
+    return <div className="p-4 text-center">Loading user data...</div>;
   }
 
   return (
     <div className="pb-4">
-      <Header title="Account Details" showBackButton />
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -55,7 +57,9 @@ const AccountDetailsPage = () => {
         <div className="flex flex-col items-center mb-6">
           <Avatar className="h-24 w-24 mb-3">
             <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
-            <AvatarFallback className="text-3xl">{currentUser.name?.charAt(0)}</AvatarFallback>
+            <AvatarFallback className="text-3xl">
+              {currentUser.name?.charAt(0)}
+            </AvatarFallback>
           </Avatar>
           <h2 className="text-xl font-semibold text-telegram-text">{currentUser.name}</h2>
           <p className="text-sm text-telegram-hint">@{currentUser.username}</p>

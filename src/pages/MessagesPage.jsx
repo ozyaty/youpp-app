@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Header from '@/components/Header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Search, MessageSquare } from 'lucide-react';
@@ -15,8 +14,6 @@ const mockConversations = [
 const MessagesPage = () => {
   return (
     <div className="pb-16">
-      <Header title="Messages" />
-      
       <div className="p-4">
         <div className="relative mb-4">
           <Search 
@@ -72,11 +69,11 @@ const MessagesPage = () => {
       </motion.div>
 
       {mockConversations.length === 0 && (
-         <div className="text-center py-16 text-telegram-secondaryText">
-            <MessageSquare size={48} className="mx-auto mb-4 opacity-50" />
-            <p className="text-lg">No messages yet.</p>
-            <p>Start a conversation to see it here.</p>
-          </div>
+        <div className="text-center py-16 text-telegram-secondaryText">
+          <MessageSquare size={48} className="mx-auto mb-4 opacity-50" />
+          <p className="text-lg">No messages yet.</p>
+          <p>Start a conversation to see it here.</p>
+        </div>
       )}
     </div>
   );
