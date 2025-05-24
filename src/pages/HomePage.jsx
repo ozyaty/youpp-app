@@ -6,20 +6,25 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useTelegram } from '@/contexts/TelegramContext';
 
 const HomePage = () => {
-  const { posts: feedPosts, currentUser } = useTelegram();
+  const { posts: feedPosts, currentUser, setHeaderConfig } = useTelegram();
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
+    // Set header config when component mounts
+    setHeaderConfig({
+      title: 'Home',
+      showBackButton: false,
+      rightAction: null,
+    });
+
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 300); 
     return () => clearTimeout(timer);
-  }, []);
+  }, [setHeaderConfig]);
 
-  const followingPosts = feedPosts.filter(post => {
-    return post.author.id !== currentUser?.id; 
-  });
-  
+  const followingPosts = feedPosts.filter(post => post.author.id !== currentUser?.id);
+
   return (
     <div className="pb-16">
       <Tabs defaultValue="foryou" className="w-full">
@@ -53,12 +58,8 @@ const HomePage = () => {
               initial="hidden"
               animate="visible"
               variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                },
-                hidden: {}
+                visible: { transition: { staggerChildren: 0.1 } },
+                hidden: {},
               }}
             >
               {feedPosts.map((post) => (
@@ -83,12 +84,8 @@ const HomePage = () => {
               initial="hidden"
               animate="visible"
               variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.1
-                  }
-                },
-                hidden: {}
+                visible: { transition: { staggerChildren: 0.1 } },
+                hidden: {},
               }}
             >
               {followingPosts.map((post) => (
@@ -98,7 +95,7 @@ const HomePage = () => {
           )}
         </TabsContent>
       </Tabs>
-      
+
       <CreatePostButton />
     </div>
   );
