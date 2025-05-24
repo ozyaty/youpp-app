@@ -3,10 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTelegram } from '@/contexts/TelegramContext';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const isScrollingUp = useScrollDirection(); // ⬆️ Custom hook
   const { headerConfig } = useTelegram();
 
   const {
@@ -21,9 +23,9 @@ const Header = () => {
 
   return (
     <motion.header
-      className="relative w-full h-14 px-4 bg-[#0088cc] text-white shadow-md flex items-center justify-between"
-      initial={{ y: -50 }}
-      animate={{ y: 0 }}
+      className="fixed top-0 left-0 right-0 z-50 w-full h-14 px-4 bg-[#0088cc]/70 text-white shadow-md backdrop-blur-md flex items-center justify-between"
+      initial={{ y: 0 }}
+      animate={{ y: isScrollingUp ? 0 : -80 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
       {showBackButton && (
@@ -37,7 +39,7 @@ const Header = () => {
       )}
 
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
-        <img src="/youpp-logo.png" alt="Youpp Logo" className="h-16 object-contain" />
+        <img src="/youpp-logo.png" alt="Youpp Logo" className="h-12 object-contain" />
       </div>
 
       {rightAction && (
