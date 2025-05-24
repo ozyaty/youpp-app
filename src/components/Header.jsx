@@ -8,12 +8,12 @@ import { useScrollDirection } from '@/hooks/useScrollDirection';
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isScrollingUp = useScrollDirection(); // ⬆️ Custom hook
+  const scrollDir = useScrollDirection();
   const { headerConfig } = useTelegram();
 
   const {
     showBackButton = false,
-    rightAction = null
+    rightAction = null,
   } = headerConfig;
 
   const goBack = () => {
@@ -23,10 +23,8 @@ const Header = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 w-full h-14 px-4 bg-[#0088cc]/70 text-white shadow-md backdrop-blur-md flex items-center justify-between"
-      initial={{ y: 0 }}
-      animate={{ y: isScrollingUp ? 0 : -80 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      className="fixed top-0 left-0 right-0 z-20 w-full h-14 px-4 bg-[#0088cc]/70 text-white shadow-md backdrop-blur-md flex items-center justify-between transition-transform duration-300"
+      animate={{ y: scrollDir === 'down' ? -70 : 0 }}
     >
       {showBackButton && (
         <button
