@@ -14,22 +14,20 @@ const BottomNavigation = () => {
     { path: '/notifications', icon: Bell, label: 'Notifications' },
     { path: '/profile', icon: User, label: 'Profile' },
   ];
-  
+
   return (
     <motion.div 
-      className="fixed bottom-0 left-0 right-0 bg-white border-t border-telegram-divider flex justify-around px-1 pb-safe-bottom pt-2 z-20"
-      style={{
-        paddingBottom: 'env(safe-area-inset-bottom)', // fallback for unsupported Tailwind classes
-        WebkitPaddingBottom: 'env(safe-area-inset-bottom)',
-      }}
+      className="fixed bottom-0 left-0 right-0 bg-white border-t border-telegram-divider flex justify-around py-2 px-1 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] z-10"
       initial={{ y: 100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 260, damping: 20 }}
     >
       {navItems.map((item) => {
-        const isActive = location.pathname === item.path || (item.path === '/profile' && location.pathname.startsWith('/profile/'));
+        const isActive =
+          location.pathname === item.path ||
+          (item.path === '/profile' && location.pathname.startsWith('/profile/'));
         const IconComponent = item.icon;
-        
+
         return (
           <button
             key={item.path}

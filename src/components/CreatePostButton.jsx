@@ -8,20 +8,16 @@ const CreatePostButton = () => {
 
   return (
     <motion.button
-      className="fixed right-4 z-30 bg-telegram-blue text-white rounded-full p-4 shadow-lg"
-      style={{
-        bottom: `calc(4.5rem + env(safe-area-inset-bottom))`, // float above BottomNav + inset
-        WebkitBottom: `calc(4.5rem + env(safe-area-inset-bottom))`
-      }}
+      className="fixed bottom-[calc(env(safe-area-inset-bottom)+5rem)] right-4 bg-telegram-blue text-white rounded-full p-4 shadow-lg z-20"
       onClick={() => navigate('/create')}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
-        type: "spring",
+        type: 'spring',
         stiffness: 260,
-        damping: 20
+        damping: 20,
       }}
     >
       <Plus size={24} />
