@@ -1,12 +1,14 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, Search, MessageSquare, Bell, User } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import useScrollDirection from '@/hooks/useScrollDirection';
 
 const BottomNavigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+  const scrollDirection = useScrollDirection();
+
   const navItems = [
     { path: '/', icon: Home, label: 'Home' },
     { path: '/explore', icon: Search, label: 'Explore' },
@@ -16,16 +18,16 @@ const BottomNavigation = () => {
   ];
 
   return (
-    <motion.div 
-      className="fixed bottom-0 left-0 right-0 bg-white border-t border-telegram-divider flex justify-around py-2 px-1 pb-[calc(env(safe-area-inset-bottom)+0.5rem)] z-10"
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+    <motion.div
+      className={`fixed bottom-0 left-0 right-0 z-20 backdrop-blur-md bg-white/90 border-t border-telegram-divider flex justify-around py-2 px-1`}
+      animate={{
+        opacity: scrollDirection === 'down' ? 0.6 : 1,
+        y: scrollDirection === 'down' ? 10 : 0,
+      }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
     >
       {navItems.map((item) => {
-        const isActive =
-          location.pathname === item.path ||
-          (item.path === '/profile' && location.pathname.startsWith('/profile/'));
+        const isActive = location.pathname === item.path || (item.path === '/profile' && location.pathname.startsWith('/profile/'));
         const IconComponent = item.icon;
 
         return (
