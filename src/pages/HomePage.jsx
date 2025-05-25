@@ -10,7 +10,6 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Set header config when component mounts
     setHeaderConfig({
       title: 'Home',
       showBackButton: false,
@@ -19,14 +18,15 @@ const HomePage = () => {
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 300); 
+    }, 300);
+
     return () => clearTimeout(timer);
   }, [setHeaderConfig]);
 
   const followingPosts = feedPosts.filter(post => post.author.id !== currentUser?.id);
 
   return (
-    <div className="pb-16">
+    <div className="pt-[calc(env(safe-area-inset-top)+3.5rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)] px-4">
       <Tabs defaultValue="foryou" className="w-full">
         <TabsList className="w-full flex bg-transparent border-b border-telegram-divider">
           <TabsTrigger 
@@ -42,8 +42,8 @@ const HomePage = () => {
             Following
           </TabsTrigger>
         </TabsList>
-        
-        <TabsContent value="foryou" className="mt-2 px-4">
+
+        <TabsContent value="foryou" className="mt-2">
           {isLoading ? (
             <div className="flex justify-center py-8">
               <div className="w-8 h-8 border-2 border-telegram-blue border-t-transparent rounded-full animate-spin"></div>
@@ -68,8 +68,8 @@ const HomePage = () => {
             </motion.div>
           )}
         </TabsContent>
-        
-        <TabsContent value="following" className="mt-2 px-4">
+
+        <TabsContent value="following" className="mt-2">
           {isLoading ? (
             <div className="flex justify-center py-8">
               <div className="w-8 h-8 border-2 border-telegram-blue border-t-transparent rounded-full animate-spin"></div>
