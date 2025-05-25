@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Home, Search, MessageSquare, Bell, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import useScrollDirection from '@/hooks/useScrollDirection';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 const BottomNavigation = () => {
   const navigate = useNavigate();
