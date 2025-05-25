@@ -3,17 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTelegram } from '@/contexts/TelegramContext';
-import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const scrollDir = useScrollDirection();
   const { headerConfig } = useTelegram();
 
   const {
     showBackButton = false,
-    rightAction = null,
+    rightAction = null
   } = headerConfig;
 
   const goBack = () => {
@@ -23,8 +21,10 @@ const Header = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-20 w-full h-14 px-4 bg-[#0088cc]/70 text-white shadow-md backdrop-blur-md flex items-center justify-between transition-transform duration-300"
-      animate={{ y: scrollDir === 'down' ? -70 : 0 }}
+      className="fixed top-[env(safe-area-inset-top)] left-0 right-0 z-50 h-14 px-4 bg-[#0088cc]/70 text-white shadow-md backdrop-blur-md flex items-center justify-between"
+      initial={{ y: -50 }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
       {showBackButton && (
         <button

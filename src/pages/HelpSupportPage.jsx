@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import PageWrapper from '@/components/PageWrapper'; // ✅
 
 const HelpSupportPage = () => {
   const { setHeaderConfig } = useTelegram();
@@ -71,7 +72,7 @@ const HelpSupportPage = () => {
   ];
 
   return (
-    <div className="pb-16">
+    <PageWrapper>
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -103,10 +104,16 @@ const HelpSupportPage = () => {
 
         <div id="faq-section" className="mb-6">
           <h3 className="text-lg font-semibold mb-3 text-telegram-text">Frequently Asked Questions</h3>
-          <Accordion type="single" collapsible className="w-full bg-telegram-secondary-bg rounded-lg p-2 border border-telegram-divider">
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full bg-telegram-secondary-bg rounded-lg p-2 border border-telegram-divider"
+          >
             {faqs.map((faq, index) => (
               <AccordionItem value={`item-${index + 1}`} key={index}>
-                <AccordionTrigger className="text-telegram-text hover:no-underline text-left">{faq.question}</AccordionTrigger>
+                <AccordionTrigger className="text-telegram-text hover:no-underline text-left">
+                  {faq.question}
+                </AccordionTrigger>
                 <AccordionContent className="text-telegram-hint">
                   {faq.answer}
                 </AccordionContent>
@@ -118,14 +125,14 @@ const HelpSupportPage = () => {
         <div className="text-center text-telegram-hint text-sm">
           <p>Can't find what you're looking for?</p>
           <p>
-            Contact us at{" "}
+            Contact us at{' '}
             <a href="mailto:support@yourapp.com" className="text-telegram-link">
               support@yourapp.com
             </a>
           </p>
         </div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

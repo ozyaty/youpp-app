@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Activity as ActivityIcon, Users, BarChart2 } from 'lucide-react';
 import { useTelegram } from '@/contexts/TelegramContext';
+import PageWrapper from '@/components/PageWrapper'; // ✅ Added
 
 const ActivityPage = () => {
   const { setHeaderConfig } = useTelegram();
@@ -22,7 +23,7 @@ const ActivityPage = () => {
   ];
 
   return (
-    <div className="pb-16">
+    <PageWrapper> {/* ✅ Wrapped with PageWrapper */}
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -77,7 +78,7 @@ const ActivityPage = () => {
           </div>
         )}
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

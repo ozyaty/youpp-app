@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Search, MessageSquare } from 'lucide-react';
+import PageWrapper from '@/components/PageWrapper';
+import { useTelegram } from '@/contexts/TelegramContext';
 
 const mockConversations = [
   { id: 'convo1', name: 'Alex Johnson', lastMessage: 'Sounds good! See you then.', time: '10:30 AM', unread: 2, avatar: '' },
@@ -12,8 +14,18 @@ const mockConversations = [
 ];
 
 const MessagesPage = () => {
+  const { setHeaderConfig } = useTelegram();
+
+  useEffect(() => {
+    setHeaderConfig({ title: 'Messages', showBackButton: false });
+
+    return () => {
+      setHeaderConfig({ title: null, showBackButton: false });
+    };
+  }, [setHeaderConfig]);
+
   return (
-    <div className="pb-16">
+    <PageWrapper>
       <div className="p-4">
         <div className="relative mb-4">
           <Search 
@@ -75,7 +87,7 @@ const MessagesPage = () => {
           <p>Start a conversation to see it here.</p>
         </div>
       )}
-    </div>
+    </PageWrapper>
   );
 };
 

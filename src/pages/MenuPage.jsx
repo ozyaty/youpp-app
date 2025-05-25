@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import PageWrapper from '@/components/PageWrapper'; // ✅
 
 const MenuPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,6 @@ const MenuPage = () => {
   const { currentUser, showAlert, closeApp, setHeaderConfig } = useTelegram();
 
   useEffect(() => {
-    // Show back arrow and no right action
     setHeaderConfig({ showBackButton: true, rightAction: null });
 
     return () => {
@@ -80,7 +80,7 @@ const MenuPage = () => {
   ];
 
   return (
-    <div className="pb-4">
+    <PageWrapper>
       <motion.div
         className="p-4"
         initial={{ opacity: 0 }}
@@ -146,7 +146,7 @@ const MenuPage = () => {
           <p>Version 1.0.1</p>
         </div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

@@ -5,13 +5,16 @@ import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { useToast } from '@/components/ui/use-toast';
+import PageWrapper from '@/components/PageWrapper';
 
 const PrivacySecurityPage = () => {
   const { currentUser, updateUserProfile, setHeaderConfig } = useTelegram();
   const { toast } = useToast();
 
   const [isPrivateProfile, setIsPrivateProfile] = useState(currentUser?.isPrivate || false);
-  const [showActivityStatus, setShowActivityStatus] = useState(currentUser?.showActivityStatus !== undefined ? currentUser.showActivityStatus : true);
+  const [showActivityStatus, setShowActivityStatus] = useState(
+    currentUser?.showActivityStatus !== undefined ? currentUser.showActivityStatus : true
+  );
 
   useEffect(() => {
     setHeaderConfig({ title: 'Privacy & Security', showBackButton: true });
@@ -44,7 +47,9 @@ const PrivacySecurityPage = () => {
       id: 'privateProfile',
       icon: isPrivateProfile ? Lock : Unlock,
       title: 'Private Profile',
-      description: isPrivateProfile ? 'Only followers you approve can see your posts.' : 'Anyone can see your posts and profile.',
+      description: isPrivateProfile
+        ? 'Only followers you approve can see your posts.'
+        : 'Anyone can see your posts and profile.',
       control: <Switch checked={isPrivateProfile} onCheckedChange={handlePrivateProfileToggle} />,
     },
     {
@@ -59,19 +64,21 @@ const PrivacySecurityPage = () => {
       icon: UserCheck,
       title: 'Blocked Accounts',
       description: 'Manage accounts you have blocked.',
-      action: () => toast({ title: "Blocked Accounts", description: "Feature not yet implemented." }),
+      action: () =>
+        toast({ title: 'Blocked Accounts', description: 'Feature not yet implemented.' }),
     },
     {
       id: 'twoFactor',
       icon: ShieldQuestion,
       title: 'Two-Factor Authentication',
       description: 'Add an extra layer of security to your account.',
-      action: () => toast({ title: "Two-Factor Authentication", description: "Feature not yet implemented." }),
-    }
+      action: () =>
+        toast({ title: 'Two-Factor Authentication', description: 'Feature not yet implemented.' }),
+    },
   ];
 
   return (
-    <div className="pb-16">
+    <PageWrapper>
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -105,7 +112,7 @@ const PrivacySecurityPage = () => {
           Review your settings regularly to ensure your account remains secure and your privacy is protected.
         </p>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

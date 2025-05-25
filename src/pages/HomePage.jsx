@@ -4,6 +4,7 @@ import Post from '@/components/Post';
 import CreatePostButton from '@/components/CreatePostButton';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useTelegram } from '@/contexts/TelegramContext';
+import PageWrapper from '@/components/PageWrapper'; // ✅ Import wrapper
 
 const HomePage = () => {
   const { posts: feedPosts, currentUser, setHeaderConfig } = useTelegram();
@@ -26,7 +27,7 @@ const HomePage = () => {
   const followingPosts = feedPosts.filter(post => post.author.id !== currentUser?.id);
 
   return (
-    <div className="pt-[calc(env(safe-area-inset-top)+3.5rem)] pb-[calc(env(safe-area-inset-bottom)+5.5rem)] px-4">
+    <PageWrapper> {/* ✅ Apply wrapper here */}
       <Tabs defaultValue="foryou" className="w-full">
         <TabsList className="w-full flex bg-transparent border-b border-telegram-divider">
           <TabsTrigger 
@@ -97,7 +98,7 @@ const HomePage = () => {
       </Tabs>
 
       <CreatePostButton />
-    </div>
+    </PageWrapper>
   );
 };
 

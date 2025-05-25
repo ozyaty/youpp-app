@@ -3,6 +3,7 @@ import Post from '@/components/Post';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { motion } from 'framer-motion';
 import { BookmarkX } from 'lucide-react';
+import PageWrapper from '@/components/PageWrapper'; // ✅ ADDED
 
 const BookmarksPage = () => {
   const { posts, currentUser, setHeaderConfig } = useTelegram();
@@ -20,7 +21,7 @@ const BookmarksPage = () => {
   );
 
   return (
-    <div className="pb-16">
+    <PageWrapper> {/* ✅ WRAPS ALL CONTENT */}
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -45,7 +46,7 @@ const BookmarksPage = () => {
           </div>
         )}
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

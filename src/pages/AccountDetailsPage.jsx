@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
+import PageWrapper from '@/components/PageWrapper'; // ✅ Added
 
 const AccountDetailsPage = () => {
   const { currentUser, updateUserProfile, setHeaderConfig } = useTelegram();
@@ -47,7 +48,7 @@ const AccountDetailsPage = () => {
   }
 
   return (
-    <div className="pb-4">
+    <PageWrapper> {/* ✅ Use wrapper here */}
       <motion.div
         className="p-4"
         initial={{ opacity: 0, y: 20 }}
@@ -129,7 +130,7 @@ const AccountDetailsPage = () => {
           </Button>
         </form>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

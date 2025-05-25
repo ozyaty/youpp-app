@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
 import { useTelegram } from '@/contexts/TelegramContext';
+import PageWrapper from '@/components/PageWrapper'; // ✅ added
 
 const CreatePostPage = () => {
   const navigate = useNavigate();
@@ -67,9 +68,9 @@ const CreatePostPage = () => {
           disabled={(!content.trim() && !imagePreview) || isSubmitting}
           className="bg-telegram-blue hover:bg-telegram-darkBlue text-white"
         >
-          {isSubmitting ? (
+          {isSubmitting && (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-          ) : null}
+          )}
           Post
         </Button>
       )
@@ -78,7 +79,7 @@ const CreatePostPage = () => {
     return () => {
       setHeaderConfig({ title: null, showBackButton: false, rightAction: null });
     };
-  }, [content, imagePreview, isSubmitting, handleSubmit, setHeaderConfig]);
+  }, [content, imagePreview, isSubmitting, setHeaderConfig]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -100,7 +101,7 @@ const CreatePostPage = () => {
   };
 
   return (
-    <div className="pb-16">
+    <PageWrapper> {/* ✅ wrapped for safe area */}
       <motion.div
         className="p-4"
         initial={{ opacity: 0 }}
@@ -169,7 +170,7 @@ const CreatePostPage = () => {
           </div>
         </div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

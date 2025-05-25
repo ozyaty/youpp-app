@@ -7,6 +7,7 @@ import { useTelegram } from '@/contexts/TelegramContext';
 import { Menu, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import PageWrapper from '@/components/PageWrapper';
 
 const ProfilePage = () => {
   const { id: profileId } = useParams();
@@ -65,7 +66,6 @@ const ProfilePage = () => {
     setUserPosts(allPosts.filter(post => post.author.id === targetUser.id));
     setIsLoading(false);
 
-    // Set header config based on profile type
     setHeaderConfig({
       showBackButton: !targetUser.isCurrentUser,
       rightAction: targetUser.isCurrentUser ? (
@@ -79,7 +79,6 @@ const ProfilePage = () => {
       )
     });
 
-    // Reset header when leaving page
     return () => {
       setHeaderConfig({ showBackButton: false, rightAction: null });
     };
@@ -105,7 +104,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="pb-16">
+    <PageWrapper>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -117,7 +116,7 @@ const ProfilePage = () => {
           onUpdateProfile={isOwnProfile ? updateUserProfile : null}
         />
 
-        <div className="px-4 mt-4">
+        <div className="mt-4">
           {userPosts.map((post) => (
             <Post key={post.id} post={post} />
           ))}
@@ -129,7 +128,7 @@ const ProfilePage = () => {
           )}
         </div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 

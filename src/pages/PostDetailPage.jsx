@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 import { useTelegram } from '@/contexts/TelegramContext';
+import PageWrapper from '@/components/PageWrapper';
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -22,7 +23,6 @@ const PostDetailPage = () => {
 
   useEffect(() => {
     setHeaderConfig({ title: 'Post', showBackButton: true });
-
     return () => {
       setHeaderConfig({ title: null, showBackButton: false, rightAction: null });
     };
@@ -92,22 +92,26 @@ const PostDetailPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-8">
-        <div className="w-8 h-8 border-2 border-telegram-blue border-t-transparent rounded-full animate-spin"></div>
-      </div>
+      <PageWrapper>
+        <div className="flex justify-center py-8">
+          <div className="w-8 h-8 border-2 border-telegram-blue border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </PageWrapper>
     );
   }
 
   if (!post) {
     return (
-      <div className="p-4 text-center">
-        <p>The post you're looking for doesn't exist or has been removed.</p>
-      </div>
+      <PageWrapper>
+        <div className="p-4 text-center">
+          <p>The post you're looking for doesn't exist or has been removed.</p>
+        </div>
+      </PageWrapper>
     );
   }
 
   return (
-    <div className="pb-16">
+    <PageWrapper>
       <div className="p-4">
         <Post post={post} isDetailed />
 
@@ -158,7 +162,7 @@ const PostDetailPage = () => {
           </motion.div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 
