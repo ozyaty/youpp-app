@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Star, Lock, Rocket, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import PageWrapper from '@/components/PageWrapper'; // ✅ added
 
 const PremiumPage = () => {
   const { setHeaderConfig, currentUser, actions } = useTelegram();
@@ -37,11 +38,12 @@ const PremiumPage = () => {
   ];
 
   return (
-    <div className="pt-[calc(env(safe-area-inset-top)+3.5rem)] pb-[calc(env(safe-area-inset-bottom)+6rem)] px-5">
+    <PageWrapper>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
+        className="px-5 pb-[6rem]"
       >
         <div className="text-center mt-4 mb-6">
           <div className="text-4xl">💎</div>
@@ -76,7 +78,7 @@ const PremiumPage = () => {
           )}
         </div>
       </motion.div>
-    </div>
+    </PageWrapper>
   );
 };
 
