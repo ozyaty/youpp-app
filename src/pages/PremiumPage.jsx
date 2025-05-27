@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, Star, Lock, Rocket, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import PageWrapper from '@/components/PageWrapper'; // ✅ added
+import PageWrapper from '@/components/PageWrapper';
 
 const PremiumPage = () => {
   const { setHeaderConfig, currentUser, actions } = useTelegram();
