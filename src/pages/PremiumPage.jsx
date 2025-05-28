@@ -6,9 +6,19 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import PageWrapper from '@/components/PageWrapper';
 
+// Fallback mock user if currentUser is null
+const fallbackUser = {
+  id: 'mock-user',
+  name: 'Guest User',
+  username: 'guest',
+  isPremium: false,
+};
+
 const PremiumPage = () => {
   const { setHeaderConfig, currentUser, actions } = useTelegram();
   const { toast } = useToast();
+
+  const safeUser = currentUser || fallbackUser;
 
   useEffect(() => {
     setHeaderConfig({
@@ -22,12 +32,19 @@ const PremiumPage = () => {
   }, [setHeaderConfig]);
 
   const handleUpgrade = () => {
-    actions.updateUserProfile({ ...currentUser, isPremium: true });
-
-    toast({
-      title: 'Premium Activated!',
-      description: 'You are now a Premium member 🎉',
-    });
+    if (currentUser && actions?.updateUserProfile) {
+      actions.updateUserProfile({ ...currentUser, isPremium: true });
+      toast({
+        title: 'Premium Activated!',
+        description: 'You are now a Premium member 🎉',
+      });
+    } else {
+      toast({
+        title: 'Login Required',
+        description: 'You must be logged in to upgrade.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const features = [
@@ -36,17 +53,6 @@ const PremiumPage = () => {
     { icon: <Rocket size={18} />, label: 'Priority Access to New Tools' },
     { icon: <Shield size={18} />, label: 'Increased Security & Visibility' },
   ];
-
-  // ✅ Fallback if currentUser is not loaded
-  if (!currentUser) {
-    return (
-      <PageWrapper>
-        <div className="flex justify-center items-center h-[calc(100vh-100px)] text-telegram-secondaryText">
-          Loading user...
-        </div>
-      </PageWrapper>
-    );
-  }
 
   return (
     <PageWrapper>
@@ -74,7 +80,7 @@ const PremiumPage = () => {
         </div>
 
         <div className="mt-8 text-center">
-          {currentUser?.isPremium ? (
+          {safeUser.isPremium ? (
             <div className="flex items-center justify-center gap-2 text-green-600 font-medium">
               <CheckCircle size={20} />
               You are already Premium!
