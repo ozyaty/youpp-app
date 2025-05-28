@@ -37,6 +37,17 @@ const PremiumPage = () => {
     { icon: <Shield size={18} />, label: 'Increased Security & Visibility' },
   ];
 
+  // ✅ Fallback if currentUser is not loaded
+  if (!currentUser) {
+    return (
+      <PageWrapper>
+        <div className="flex justify-center items-center h-[calc(100vh-100px)] text-telegram-secondaryText">
+          Loading user...
+        </div>
+      </PageWrapper>
+    );
+  }
+
   return (
     <PageWrapper>
       <motion.div
