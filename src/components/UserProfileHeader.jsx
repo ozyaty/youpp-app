@@ -25,8 +25,8 @@ const UserProfileHeader = () => {
       )}
 
       {/* Avatar & Name */}
-      <div className="flex flex-col items-center mt-[-2.5rem]">
-        <Avatar className="w-20 h-20 border-4 border-white shadow-md">
+      <div className="flex flex-col items-center -mt-12">
+        <Avatar className="w-20 h-20 border-4 border-white shadow-md bg-white">
           <AvatarImage
             src={
               user.avatar ||
