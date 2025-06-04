@@ -1,11 +1,12 @@
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, HelpCircle, LogOut, UserCircle, Bookmark, BarChart3 } from 'lucide-react';
+import { Shield, HelpCircle, LogOut, UserCircle, Bookmark, BarChart3, Gem } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
 import { useTelegram } from '@/contexts/TelegramContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import PageWrapper from '@/components/PageWrapper'; // ✅
+import PageWrapper from '@/components/PageWrapper';
 
 const MenuPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,6 @@ const MenuPage = () => {
 
   useEffect(() => {
     setHeaderConfig({ showBackButton: true, rightAction: null });
-
     return () => {
       setHeaderConfig({ showBackButton: false, rightAction: null });
     };
@@ -27,7 +27,6 @@ const MenuPage = () => {
           title: "Logged out",
           description: "You have been logged out successfully.",
         });
-
         setTimeout(() => {
           if (window.Telegram?.WebApp) {
             closeApp();
@@ -40,6 +39,12 @@ const MenuPage = () => {
   };
 
   const menuItems = [
+    !currentUser?.isPremium && {
+      icon: Gem,
+      title: "Upgrade to Premium",
+      description: "Get verified and unlock premium features",
+      action: () => navigate('/premium'),
+    },
     {
       icon: UserCircle,
       title: "Account",
@@ -77,7 +82,7 @@ const MenuPage = () => {
       action: handleLogout,
       danger: true
     }
-  ];
+  ].filter(Boolean);
 
   return (
     <PageWrapper>
@@ -97,7 +102,6 @@ const MenuPage = () => {
               {currentUser?.name?.charAt(0) || 'U'}
             </AvatarFallback>
           </Avatar>
-
           <div>
             <h2 className="text-md font-semibold text-telegram-text">
               {currentUser?.name}
@@ -111,7 +115,6 @@ const MenuPage = () => {
         <div className="bg-telegram-bg rounded-lg shadow-sm border border-telegram-divider overflow-hidden">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
-
             return (
               <motion.button
                 key={item.title}
@@ -127,7 +130,6 @@ const MenuPage = () => {
                 }`}>
                   <Icon size={18} className={item.danger ? 'text-red-500' : 'text-telegram-button-color'} />
                 </div>
-
                 <div className="flex-1">
                   <h3 className={`font-medium text-sm ${item.danger ? 'text-red-600' : 'text-telegram-text'}`}>{item.title}</h3>
                   {item.description && (
