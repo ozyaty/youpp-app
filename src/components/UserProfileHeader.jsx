@@ -14,7 +14,7 @@ const UserProfileHeader = () => {
   const avatarFallback = user.name?.charAt(0) || 'U';
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full pt-[calc(env(safe-area-inset-top)+4.5rem)]">
       {/* Cover Image */}
       {user.coverImage && (
         <img
