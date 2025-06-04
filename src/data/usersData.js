@@ -1,9 +1,9 @@
 export const currentUser = {
   id: 'user1',
-  name: 'Current User',
-  username: 'currentuser',
-  avatar: '',
-  coverImage: '',
+  name: 'Ozzy Atay',
+  username: 'OzzyAtay',
+  avatar: 'https://ui-avatars.com/api/?name=Ozzy+Atay&background=random',
+  coverImage: 'https://source.unsplash.com/800x200/?landscape,technology',
   bio: 'This is my bio. I love sharing thoughts and connecting with people.',
   location: 'San Francisco, CA',
   website: 'mywebsite.com',
@@ -16,6 +16,7 @@ export const currentUser = {
   isPrivate: false,
   showActivityStatus: true,
   bookmarkedPosts: [],
+  isPremium: true,
 };
 
 export const users = [
@@ -23,8 +24,8 @@ export const users = [
     id: 'user2',
     name: 'Alex Johnson',
     username: 'alexj',
-    avatar: '',
-    coverImage: '',
+    avatar: 'https://ui-avatars.com/api/?name=Alex+Johnson&background=random',
+    coverImage: 'https://source.unsplash.com/800x200/?city',
     bio: 'Tech enthusiast and coffee lover. Sharing my thoughts on the latest tech trends.',
     location: 'New York, NY',
     website: 'alexj.dev',
@@ -38,13 +39,14 @@ export const users = [
     isPrivate: false,
     showActivityStatus: true,
     bookmarkedPosts: [],
+    isPremium: false,
   },
   {
     id: 'user3',
     name: 'Sarah Miller',
     username: 'sarahm',
-    avatar: '',
-    coverImage: '',
+    avatar: 'https://ui-avatars.com/api/?name=Sarah+Miller&background=random',
+    coverImage: 'https://source.unsplash.com/800x200/?travel',
     bio: 'Photographer and travel enthusiast. Capturing moments around the world.',
     location: 'London, UK',
     website: 'sarahphotos.com',
@@ -58,13 +60,14 @@ export const users = [
     isPrivate: true,
     showActivityStatus: false,
     bookmarkedPosts: [],
+    isPremium: false,
   },
   {
     id: 'user4',
     name: 'David Chen',
     username: 'davidc',
-    avatar: '',
-    coverImage: '',
+    avatar: 'https://ui-avatars.com/api/?name=David+Chen&background=random',
+    coverImage: 'https://source.unsplash.com/800x200/?code',
     bio: 'Software engineer by day, gamer by night. Coding and gaming are my passions.',
     location: 'Seattle, WA',
     website: 'davidcodes.dev',
@@ -78,5 +81,6 @@ export const users = [
     isPrivate: false,
     showActivityStatus: true,
     bookmarkedPosts: [],
+    isPremium: false,
   }
 ];
