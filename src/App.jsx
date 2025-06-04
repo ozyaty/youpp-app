@@ -1,3 +1,4 @@
+
 import Header from './components/Header';
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
@@ -14,11 +15,11 @@ import PostDetailPage from '@/pages/PostDetailPage';
 import MenuPage from '@/pages/MenuPage';
 import MessagesPage from '@/pages/MessagesPage';
 import AccountDetailsPage from '@/pages/AccountDetailsPage';
-// import AppearancePage from '@/pages/AppearancePage'; // Removed for now
 import PrivacySecurityPage from '@/pages/PrivacySecurityPage';
 import BookmarksPage from '@/pages/BookmarksPage';
 import ActivityPage from '@/pages/ActivityPage';
 import HelpSupportPage from '@/pages/HelpSupportPage';
+import PremiumPage from '@/pages/PremiumPage'; // ✅ Added
 
 // Components
 import BottomNavigation from '@/components/BottomNavigation';
@@ -88,11 +89,11 @@ const AppContent = () => {
           <Route path="/post/:id" element={<PostDetailPage />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/account-details" element={<AccountDetailsPage />} />
-          {/* <Route path="/appearance" element={<AppearancePage currentTheme={theme} setTheme={setTheme} />} /> */}
           <Route path="/privacy-security" element={<PrivacySecurityPage />} />
           <Route path="/bookmarks" element={<BookmarksPage />} />
           <Route path="/activity" element={<ActivityPage />} />
           <Route path="/help-support" element={<HelpSupportPage />} />
+          <Route path="/premium" element={<PremiumPage />} /> {/* ✅ Added route */}
         </Routes>
       </AnimatePresence>
 
