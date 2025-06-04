@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, BadgeCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
@@ -41,7 +41,12 @@ const PostHeader = ({ post }) => {
       <div className="flex-1">
         <div className="flex items-center justify-between">
           <div className="post-author-link cursor-pointer" onClick={navigateToAuthorProfile}>
-            <h3 className="font-semibold text-sm hover:underline text-telegram-text">{post.author.name}</h3>
+            <div className="flex items-center gap-1">
+              <h3 className="font-semibold text-sm hover:underline text-telegram-text">{post.author.name}</h3>
+              {post.author.isPremium && (
+                <BadgeCheck size={16} className="text-blue-500" />
+              )}
+            </div>
             <p className="text-telegram-hint text-xs">@{post.author.username} · {post.timeAgo}</p>
           </div>
           <DropdownMenu>
